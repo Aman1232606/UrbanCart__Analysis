@@ -5,7 +5,7 @@ UrbanCart Superstore — End-to-End Data Analyst Portfolio (Excel + SQL + Power 
 
 
 ##  Project Overview
-This project analyses the **UrbanCart Superstore** sales dataset and delivers insights using a full UK-style analytics workflow:
+This project analyses the **UrbanCart Superstore** sales dataset and delivers insights analytics workflow:
 
 **Excel (cleaning + dashboard) → SQL (business queries) → Power BI (model + DAX + interactive dashboard)**
 
@@ -88,14 +88,14 @@ Examples of calculated columns added to support analysis:
 - Profit by Category (column chart)
 - Profit by Region (bar chart)
 - Bottom 5 loss-making sub-categories (bar chart)
-- Discount band vs Profit (optional but strong insight)
+- Discount band vs Profit (strong insight)
 
 ### Interactivity
 - Slicers for Year, Region, Segment, Category
 
 ---
 
-# ✅ Part 2 — SQL Work (Business Queries)
+# Part 2 — SQL Work (Business Queries)
 
 ## SQL Focus Areas
 The SQL analysis was designed to replicate what UK employers expect in reporting and ad-hoc analysis:
@@ -129,7 +129,7 @@ The SQL analysis was designed to replicate what UK employers expect in reporting
 
 ---
 
-# ✅ Part 3 — Power BI Work (Model + DAX + Dashboard)
+# Part 3 — Power BI Work (Model + DAX + Dashboard)
 
 ## 1) Data Preparation (Power Query)
 Transformations applied:
