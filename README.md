@@ -1,183 +1,83 @@
-# UrbanCart__Analysis
-UrbanCart Superstore — End-to-End Data Analyst Portfolio (Excel + SQL + Power BI)
+# UrbanCart Sales & Profitability Analysis
 
+SQL, Excel and Power BI analysis of retail sales and profit, built on the public Superstore sample dataset (2014-2017). The goal is to find where the business makes and loses money, and what drives it.
 
+## Dataset
 
+- 9,994 order lines, 5,009 orders, 793 customers, 1,862 products
+- 3 categories, 17 sub-categories, 4 regions, 49 states
+- Order dates from 3 Jan 2014 to 30 Dec 2017
+- Quality checks: no missing values, no negative delivery times; 1 duplicate row (ignoring Row ID); 519 same-day deliveries
 
-##  Project Overview
-This project analyses the **UrbanCart Superstore** sales dataset and delivers insights analytics workflow:
+## Key findings
 
-**Excel (cleaning + dashboard) → SQL (business queries) → Power BI (model + DAX + interactive dashboard)**
+| Metric | Value |
+|---|---|
+| Total sales | 2,297,201 |
+| Total profit | 286,397 |
+| Overall profit margin (profit / sales) | 12.47% |
+| Average order value (sales / distinct orders) | 458.61 |
+| Average discount | 15.6% |
+| Average delivery time | 3.96 days |
 
-The aim is to turn raw transactional data into clear, stakeholder-ready reporting and actionable business insights.
+**1. Discounts above 20% destroy profit**
 
----
+| Discount band | Order lines | Profit margin | Share of lines losing money |
+|---|---|---|---|
+| 0% | 4,798 | +29.5% | 0.0% |
+| Up to 10% | 94 | +16.6% | 4.3% |
+| 10-20% | 3,709 | +11.6% | 14.0% |
+| 20-30% | 227 | -10.1% | 91.6% |
+| Above 30% | 1,166 | -48.2% | 97.8% |
 
-##  Dataset
-**UrbanCart Superstore (Transactional Sales Data)**  
-Each row represents an **order line item** (one product within an order).
+Overall, 1,871 order lines (18.7%) lost money, a combined loss of 156,131.
 
-### Key fields
-- **Order & Shipping**: Order Date, Ship Date, Ship Mode, Delivery Days
-- **Customer**: Customer ID, Customer Name, Segment, Region
-- **Product**: Category, Sub-Category, Product Name
-- **Metrics**: Sales, Quantity, Discount, Profit
-- **Time**: Year, Month (created for trend analysis)
+**2. Furniture is the weak category**
 
----
+| Category | Sales | Profit | Margin |
+|---|---|---|---|
+| Technology | 836,154 (36.4%) | 145,455 | 17.4% |
+| Furniture | 741,999 (32.3%) | 18,451 | 2.5% |
+| Office Supplies | 719,047 (31.3%) | 122,491 | 17.0% |
 
-##  Business Questions Answered
-- How are **Sales and Profit trending** month by month?
-- Which **categories / sub-categories** drive profit, and which are loss-making?
-- How does **discount** impact profit and margin?
-- Which **regions** and **customer segments** perform best?
-- How is **delivery performance** trending (Delivery Days, Ship Mode)?
+Three sub-categories lose money overall: Tables (-8.6% margin, -17,725 profit), Bookcases (-3.0%) and Supplies (-2.6%).
 
----
+**3. Central is the lowest-margin region**
 
-##  Tools & Skills Demonstrated
-- **Excel**: Tables, cleaning checks, calculated columns, PivotTables, PivotCharts, Slicers, KPI dashboard
-- **SQL**: Data validation checks, KPI aggregation, trends, ranking (top/bottom), profitability analysis
-- **Power BI**: Power Query transformations, star schema modelling, DAX measures, interactive dashboard design
+| Region | Sales | Profit | Margin |
+|---|---|---|---|
+| West | 725,458 | 108,418 | 14.9% |
+| East | 678,781 | 91,523 | 13.5% |
+| South | 391,722 | 46,749 | 11.9% |
+| Central | 501,240 | 39,706 | 7.9% |
 
----
+**4. Growth and seasonality**
 
-#  Part 1 — Excel Work (Cleaning + Calculated Columns + Dashboard)
+| Year | Sales | Year-on-year | Margin |
+|---|---|---|---|
+| 2014 | 484,248 | - | 10.2% |
+| 2015 | 470,533 | -2.8% | 13.1% |
+| 2016 | 609,206 | +29.5% | 13.4% |
+| 2017 | 733,215 | +20.4% | 12.7% |
 
-## 1) Data Cleaning Steps (Excel)
-1. Converted dataset to an Excel Table (`tblSales`) for structured references and easier refresh.
-2. Checked **mandatory columns** for blanks:
-   - Order ID, Order Date, Sales, Profit  
-   Blank mandatory rows were removed (where applicable).
-3. Validated data types:
-   - Dates: Order Date, Ship Date
-   - Numeric: Sales, Profit, Quantity, Discount, Delivery Days
-   - Text: Region, Segment, Category, Sub-Category, etc.
-4. Standardised text fields (where required) using TRIM/CLEAN logic.
-5. Delivery logic check:
-   - **Delivery Days = 0** treated as **Same-day** (flagged, not deleted)
-   - Negative delivery days flagged as invalid
-6. Basic sanity checks:
-   - Discount range (0 to 1)
-   - Unusual negative or zero Sales values reviewed
+September, November and December are the three strongest months in every year, and September to December together make up 50-54% of each year's sales. The best single month was November 2017 (118,448).
 
----
+**Recommendations**
 
-## 2) Calculated Columns Created (Excel)
-Examples of calculated columns added to support analysis:
-- **Order Year** = YEAR(Order Date)
-- **Order Month** (YYYY-MM) = TEXT(Order Date, "yyyy-mm")
-- **Quarter** = "Q" & ROUNDUP(MONTH(Order Date)/3,0)
-- **Discount Band** (0%, 1–10%, 11–20%, 21–30%, 31–40%, >40%)
-- **Delivery Status** (Same-day / Fast / Standard / Slow / Invalid)
-- **Is Loss** flag (Profit < 0)
+- Cap discounts at 20%; deeper discounts were loss-making on 92-98% of order lines.
+- Review pricing and discounting for Tables and Bookcases.
+- Investigate why the Central region earns about half the margin of West.
 
----
+## Project contents
 
-## 3) Excel Dashboard (Simple & Professional)
-### KPIs shown (top row)
-- Total Sales
-- Total Profit
-- Profit Margin %
-- Total Orders
-- Average Discount %
-- Average Delivery Days
+- `UrbanCart Superstore Dataset.xlsx`: raw data
+- `UrbanCart_SQL_Case_Study/`: SQL case studies covering setup, KPIs, monthly trend, category profitability, region analysis and discount impact
+- `excel_urbancart/`: Excel dashboard
+- `powerbi_dashboard_urbancart/`: Power BI dashboard and its source data
 
-### Charts used
-- Monthly Sales trend (line chart)
-- Profit by Category (column chart)
-- Profit by Region (bar chart)
-- Bottom 5 loss-making sub-categories (bar chart)
-- Discount band vs Profit (strong insight)
+## Limitations
 
-### Interactivity
-- Slicers for Year, Region, Segment, Category
-
----
-
-# Part 2 — SQL Work (Business Queries)
-
-## SQL Focus Areas
-The SQL analysis was designed to replicate what UK employers expect in reporting and ad-hoc analysis:
-
-### 1) Data Quality Checks
-- Null checks for mandatory columns (Order ID, Order Date, Sales, Profit)
-- Duplicate checks (Row ID uniqueness)
-- Range checks:
-  - Discount between 0 and 1
-  - Delivery Days not negative
-
-### 2) KPI Summary Queries
-- Total Sales, Total Profit, Profit Margin
-- Total Orders (distinct Order ID)
-- Average Order Value (AOV)
-- Average Discount
-- Average Delivery Days
-
-### 3) Trend Analysis
-- Monthly sales & profit trend (Order Month)
-- Year-over-year performance (Order Year)
-
-### 4) Profitability & Ranking
-- Profit by Category / Sub-Category
-- Top products by Profit
-- Bottom loss-making Sub-Categories (key risk drivers)
-
-### 5) Discount Impact
-- Profitability by Discount Band (0%, 1–10%, 11–20%, etc.)
-- Identify discount thresholds where margin turns negative
-
----
-
-# Part 3 — Power BI Work (Model + DAX + Dashboard)
-
-## 1) Data Preparation (Power Query)
-Transformations applied:
-- Corrected data types (Date, Text, Decimal, Whole Number)
-- Trimmed and cleaned text columns
-- Removed duplicates and error rows
-- Created a **GeoKey** for consistent geography relationships
-- Built a dynamic **Date table** based on Order Date range
-
----
-
-## 2) Data Model (Star Schema)
-A professional star schema was implemented:
-
-### Fact Table
-- **Fact_Sales**
-  - Sales, Profit, Quantity, Discount
-  - Order Date, Customer ID, Product ID, GeoKey
-
-### Dimension Tables
-- **Dim_Date** – Date, Year, Month, Quarter
-- **Dim_Customer** – Customer ID, Customer Name, Segment
-- **Dim_Product** – Product ID, Category, Sub-Category
-- **Dim_Geography** – Country, Region, State, City
-
-Relationships:
-- One-to-Many (1:*)
-- Single direction
-- Optimised for time intelligence and performance
-
----
-
-## 3) DAX Measures Created
-Core measures:
-
-```DAX
-Total Sales = SUM ( Fact_sales[Sales] )
-
-Total Profit = SUM ( Fact_sales[Profit] )
-
-Total Quantity = SUM ( Fact_sales[Quantity] )
-
-Total Orders = DISTINCTCOUNT ( Fact_sales[Order ID] )
-
-Profit Margin % = DIVIDE ( [Total Profit], [Total Sales] )
-
-Average Order Value = DIVIDE ( [Total Sales], [Total Orders] )
-
-Average Discount % = AVERAGE ( Fact_sales[Discount] )
-
-Average Delivery Days = AVERAGE ( Fact_sales[Delivery Days] )
+- The discount analysis is descriptive. It shows that heavily discounted lines lose money, not that discounts alone are the cause.
+- No statistical significance tests were run.
+- A single public dataset; results do not generalise to other businesses.
+- Currency is not stated in the dataset, so values are shown without a symbol.
