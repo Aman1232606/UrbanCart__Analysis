@@ -11,6 +11,8 @@ SQL, Excel and Power BI analysis of retail sales and profit, built on the public
 
 ## Key findings
 
+![Key findings](images/key_findings.png)
+
 | Metric | Value |
 |---|---|
 | Total sales | 2,297,201 |
@@ -27,7 +29,7 @@ SQL, Excel and Power BI analysis of retail sales and profit, built on the public
 | 0% | 4,798 | +29.5% | 0.0% |
 | Up to 10% | 94 | +16.6% | 4.3% |
 | 10-20% | 3,709 | +11.6% | 14.0% |
-| 20-30% | 227 | -10.1% | 91.6% |
+| 20-30% | 227 | -10.0% | 91.6% |
 | Above 30% | 1,166 | -48.2% | 97.8% |
 
 Overall, 1,871 order lines (18.7%) lost money, a combined loss of 156,131.
